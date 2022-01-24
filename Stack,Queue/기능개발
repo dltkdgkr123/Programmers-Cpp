@@ -1,0 +1,49 @@
+//코테에서 풀어본 첫 문제
+// 벡터 및 큐를 처음 사용해보았다.
+
+#include <string>
+#include <vector>
+#include <queue>
+#include <iostream>
+
+using namespace std;
+
+vector<int> solution(vector<int> progresses, vector<int> speeds) {
+    vector<int> answer;
+    queue<int> q;
+    int count;
+    int days;
+    int max_days;
+    
+    for (int i = 0; i < progresses.size(); i++)
+    {
+        days = (100 -  progresses[i]) / speeds[i];
+        
+        if ((progresses[i]+(speeds[i]*days))!=100)
+            days++;
+        
+        q.push(days);
+    }
+
+
+    
+    while (!q.empty())
+    {
+        max_days = q.front();
+        q.pop();
+        count = 1;
+        while (!q.empty())
+        {
+            if (q.front() <= max_days)
+            {
+                count++;
+                q.pop();
+            }
+            else
+                break;
+        }
+        answer.push_back(count);
+    }
+
+    return answer;
+}
