@@ -1,0 +1,46 @@
+// stoi, substr 함수를 상기시켰다.
+// int로 값을 처리할 경우, 데이터가 커질 때 overflow가 발생하므로 string으로 처리한다.
+
+#include <string>
+#include <vector>
+#include <queue>
+#include <deque>
+#include <algorithm>
+
+using namespace std;
+
+vector<int> solution(vector<string> operations) {
+    vector<int> answer;
+    deque<int> q;
+    int value;
+    
+    for (auto v: operations)
+    {
+        if (v[0] == 'I')
+        {
+            value = stoi(v.substr(2));
+            q.push_back(value);
+            sort(q.begin(), q.end());
+            
+        }
+        if (v[0] == 'D' && v[2] == '1' && !q.empty())
+            q.pop_back();
+
+        if (v[0] == 'D' && v[2] == '-' && v[3] == '1' && !q.empty())
+            q.pop_front();
+
+    }
+    
+    if (!q.empty())
+    {
+        answer.push_back(q.back());
+        answer.push_back(q.front());
+    }
+    else
+    {
+        answer.push_back(0);
+        answer.push_back(0);
+    }
+    
+    return answer;
+}
