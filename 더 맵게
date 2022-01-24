@@ -1,0 +1,45 @@
+// 실행시간(대입)을 줄이기 위해 int top_val을 사용하지 않고
+// p_q.push(p_q.top() + *(&p_q.top() + 1) * 2); 로 바로 사용하였더니, 일부 테스트케이스에서 오류가 발생했다.
+// 큐 등의 구현부분에서 다음 값이 꼭 다음 인덱스 및 주소에 저장되지만은 않을 수 있기 때문에 발생했다고 한다.
+
+#include <string>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+int solution(vector<int> scoville, int K) {
+    priority_queue <int, vector<int>, greater<int>> p_q;
+    int answer = 0;
+    int top_val = 0;
+
+        for (int i = 0; i < scoville.size(); i++)
+            p_q.push(scoville[i]);
+
+        while (1)
+        {
+
+            if (p_q.size() == 1)
+            {
+                if (p_q.top() < K)
+                    return -1;
+            }
+            
+            if (p_q.top() < K)
+            {
+                top_val = p_q.top();
+                p_q.pop();
+                top_val += p_q.top() * 2;
+                p_q.pop();
+                p_q.push(top_val);
+
+                answer++;
+               
+            }
+            else
+                break;
+        }
+        
+    
+    return answer;
+}
