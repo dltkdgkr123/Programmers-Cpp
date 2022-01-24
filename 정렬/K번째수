@@ -1,0 +1,24 @@
+// 코드를 최대한 간결하게 만들고싶어 int변수에 대입하지 않고 v[?]를 그대로 사용하였다.
+// vector를 0으로 resize하면 소멸되는 듯 하다.
+
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+vector<int> solution(vector<int> array, vector<vector<int>> commands) {
+    vector<int> answer;
+    vector<int> value;
+    for (auto v : commands)
+    {
+        for (v[0]; v[0] <= v[1]; v[0]++)
+        value.push_back(array[v[0]-1]);
+        
+        sort(value.begin(), value.end());
+        answer.push_back(value[v[2]-1]);
+        value.resize(0);
+
+    }
+
+    return answer;
+}
