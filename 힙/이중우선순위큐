@@ -1,4 +1,4 @@
-// stoi, substr 함수를 상기시켰다.
+// deque를 처음 사용 / stoi, substr 함수를 상기시켰다.
 // int로 값을 처리할 경우, 데이터가 커질 때 overflow가 발생하므로 string으로 처리한다.
 
 #include <string>
