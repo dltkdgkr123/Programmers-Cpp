@@ -1,0 +1,67 @@
+// 대기 트럭과 다리를 건너는 트럭을 각각의 queue로 생각하여 구현했다.
+// answer을 시간의 흐름으로 하여 answer++;에 따른 동작을 코드로 작성했다.
+// 이렇게하니 고려사항이 많아져 구현 및 디버깅에 많은 시간이 걸렸다.
+// vector의 erase함수 및 iterator 사용법을 몰라 이미 처리된 벡터값을 -99999999;로 두어 메모리 및 실행시간의 낭비가 생겼다.
+
+#include <string>
+#include <vector>
+#include <queue>
+#include <iostream>
+
+using namespace std;
+
+int solution(int bridge_length, int weight, vector<int> truck_weights) {
+    int answer = 0;
+    int bridge_weight = 0;
+    int now_weight = 0;
+    int count = 0;
+    queue<int> q_wating;
+    queue<int> q_bridge;
+    vector<int> v_time;
+
+    for (int i = 0; i < truck_weights.size(); i++)
+        q_wating.push(truck_weights[i]);
+
+    while (1)
+    {
+
+        answer++;
+
+        if (!q_bridge.empty())
+        {
+            for (int i = 0; i < v_time.size(); i++)
+            {
+                v_time[i]++;
+
+                if (v_time[i] == bridge_length)
+                {
+                    bridge_weight -= q_bridge.front();
+                    q_bridge.pop();
+                    v_time[i] = -99999999;
+                    count--;
+                }
+            }
+        }
+
+        if (!q_wating.empty())
+        {
+            now_weight = q_wating.front();
+
+            if ((now_weight + bridge_weight <= weight) && (count <= bridge_length))
+            {
+                bridge_weight += now_weight;
+                q_bridge.push(q_wating.front());
+                q_wating.pop();
+                v_time.push_back(0);
+                count++;
+            }
+        }
+
+
+
+
+        if (q_bridge.empty() && q_wating.empty())
+            return answer;
+
+    }
+}
