@@ -1,3 +1,4 @@
+// 우선순위큐를 처음 사용하였다.
 // 실행시간(대입)을 줄이기 위해 int top_val을 사용하지 않고
 // p_q.push(p_q.top() + *(&p_q.top() + 1) * 2); 로 바로 사용하였더니, 일부 테스트케이스에서 오류가 발생했다.
 // 큐 등의 구현부분에서 다음 값이 꼭 다음 인덱스 및 주소에 저장되지만은 않을 수 있기 때문에 발생했다고 한다.
@@ -9,7 +10,7 @@
 using namespace std;
 
 int solution(vector<int> scoville, int K) {
-    priority_queue <int, vector<int>, greater<int>> p_q;
+    priority_queue <int, vector<int>, greater<int>> p_q; //우선순위 함수 및 구조체는 사용자 구현 가능
     int answer = 0;
     int top_val = 0;
 
