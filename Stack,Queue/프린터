@@ -1,0 +1,54 @@
+// 내가 짠 코드의 경우 POP시마다 최대값을 탐색하고, POP한 벡터의 value가 사라지는 것이 아닌 
+// -1로 처리된 채로 다시 최대값탐색을 진행하므로, 비효율적이다.
+// 큐를 두개짜서 하나는 우선순위로 두어 처리하면 훨씬 효율적일듯 하다.
+
+#include <string>
+#include <vector>
+#include <queue>
+
+using namespace std;
+int solution(vector<int> priorities, int location) {
+    queue<pair<int, int>> q;
+    int answer = 0;
+    int max_ipt = 0;
+    int index_now = 0;
+    int value_now = 0;
+
+    for (int i = 0; i < priorities.size(); i++)
+    {
+        q.push(make_pair(priorities[i], i));
+
+        if (priorities[i] > max_ipt)
+            max_ipt = priorities[i];
+    }
+
+    while (!q.empty())
+    {
+            for (int i = 0; i < q.size(); i++)
+            {
+                value_now = q.front().first;
+                if (value_now == max_ipt)
+                {
+                   answer++;
+                   index_now = q.front().second;          
+                   if (index_now == location)
+                       return answer;
+
+                        q.pop();
+                        priorities[index_now] = -1;
+                        max_ipt = 0;
+                        for (int i = 0; i < priorities.size(); i++)
+                        {
+                            if (priorities[i] > max_ipt)
+                                max_ipt = priorities[i];
+                        }
+                }
+                else
+                {
+                    q.push(q.front());
+                    q.pop();
+                }
+            }
+            
+    }
+}
