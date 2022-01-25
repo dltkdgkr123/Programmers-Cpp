@@ -14,7 +14,7 @@ void dfs(vector<vector<int>>& computers, vector<int>& computers_i, int i)
         {
             if (computers_i[j] == 1) // 다른 방문하지 않은곳이 있으면
             {
-                computers_i[j] = 0; // 표시하고 깊이우선탐색
+                computers_i[j] = 0; // 표시하고 깊이우선탐색 순환호출
                 dfs(computers, computers[j], j);
             }
         }
