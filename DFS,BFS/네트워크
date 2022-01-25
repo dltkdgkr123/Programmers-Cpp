@@ -1,0 +1,41 @@
+// 문제의 조건에서 computer[i][i]는 항상 1이므로 (정점 자신은 항상 같은 네트워크 이므로), 방문시 0으로 처리 computer[i][i] = 0이 아닐때까지 순환호출 종료시 하나의 네트워크 생성
+// computer[i][i] = 1이면서 other은 0 일때 = 단독 네트워크
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
+void dfs(vector<vector<int>>& computers, vector<int>& computers_i, int i) 
+{
+
+        computers_i[i] == 0;  // 방문했음
+        for (int j = 0; j < computers_i.size(); j++)
+        {
+            if (computers_i[j] == 1) // 다른 방문하지 않은곳이 있으면
+            {
+                computers_i[j] = 0; // 표시하고 깊이우선탐색
+                dfs(computers, computers[j], j);
+            }
+        }
+
+    return;
+}
+
+
+
+int solution(int n, vector<vector<int>> computers) {
+    int answer = 0;
+    
+    vector<int> v;
+    for (int i = 0; i < n; i++)
+    {
+        if (computers[i][i] == 1) // 방문하지 않았으면 함수 실행
+        {
+            dfs(computers, computers[i], i); //벡터, 벡터의원소, 벡터의 원소인덱스 인수로 호출
+            answer++; // 한번 탐색 성공 = 하나의 네트워크 존재
+        }
+    }
+
+    return answer;    
+}
