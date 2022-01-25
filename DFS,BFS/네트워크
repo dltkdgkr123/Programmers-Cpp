@@ -26,8 +26,7 @@ void dfs(vector<vector<int>>& computers, vector<int>& computers_i, int i)
 
 int solution(int n, vector<vector<int>> computers) {
     int answer = 0;
-    
-    vector<int> v;
+
     for (int i = 0; i < n; i++)
     {
         if (computers[i][i] == 1) // 방문하지 않았으면 함수 실행
