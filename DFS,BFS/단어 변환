@@ -1,0 +1,66 @@
+/*
+
+각 단어를 정점, 한글자만 차이나는(dif==1인) 경로를 간선으로 생각하여 dfs -> 최단경로의 경우 bfs가 자주 쓰인다고 함
+
+visted를 "방문했던 곳" 개념으로 사용하였지만, visited를 begin으로 초기화하고 방문시마다 현재 경로를 추가하는 것이 나아보임
+(현재 단어에서 현재 단어로 갈 순 없으므로 둘다 정답은 맞음)
+또한 string으로 처음에 정의했는데, 문자열이 연결되며 새로운 단어가 만들어질 수 있어서 사용불가
+
+*min_element는 알고리듬 헤더에 포함되어 있으며 시작주소, 마지막주소 중에 최솟값을 찾아줌
+
+*/
+
+#include <string>
+#include <vector>
+#include <queue>
+#include <algorithm>
+
+using namespace std;
+
+vector<int> v; // 원래 최단경로(최소값)을 찾기위해 큐를 사용했으나, 큐는 다소 무거우므로 벡터로 변경
+
+void dfs(string begin, string& target, vector<string>& words, int count, vector<string> visited)
+{
+
+          if (begin == target) // 타겟과 같아지면 우선순위큐에 push
+        {
+        v.push_back(count);
+        return;
+        }
+
+    for (int i = 0; i < words.size(); i++) // 벡터의 단어들 begin과 비교 후 한글자만 다르면 재귀호출
+    {
+        int dif = 2; //재귀호출시 dif는 인자로 받은 변수가 아니므로 재정의 가능
+        for (int j = 0; j < words[i].size(); j++)
+        {
+            if (begin[j] != words[i][j])
+                dif--;
+        }
+        if (dif == 1 && (find(visited.begin(), visited.end(), begin) == visited.end())) 
+        {
+            visited.push_back(begin);
+            dfs(words[i], target, words, count + 1, visited);
+            visited.pop_back(); // begin push 및 재귀호출 후 벡터에 begin이 그대로 남아있으면 begin이 중첩저장되며 if문에서 조건을 만족하지 않게된다.
+        }
+
+    }
+    return;
+}
+
+
+
+int solution(string begin, string target, vector<string> words) {
+    int answer = 0;
+    int count = 0;
+    vector<string> visited;
+
+    dfs(begin, target, words, count, visited);
+
+    if (!v.empty())
+        answer = *min_element(v.begin(), v.end()); //최소경로
+    else
+        answer = 0; // 큐에 아무값도 없으면 경로가 없으므로 0 대입
+
+    return answer;
+
+}
