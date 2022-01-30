@@ -1,0 +1,36 @@
+// now는 배열에 없는 값일수도 있다.
+
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int solution(vector<int> citations) {
+    int answer = 0;
+    int above_h;
+    int now;
+
+    sort(citations.begin(), citations.end(), greater<>());
+    now = citations[0];
+
+    while (1)
+    {
+        above_h = 0;
+
+        for (int j = 0; j < citations.size(); j++)
+        {
+            if (citations[j] >= now)
+                above_h++;
+        }
+
+        if (above_h >= now)
+        {
+            answer = now;
+            break;
+        }
+
+        now--;
+    }
+    return answer;
+}
