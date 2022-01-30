@@ -1,0 +1,45 @@
+/*
+string -> int 형변환
+
+1. stoi
+
+2. atoi(변수.c.str())    string -> const *char -> int 
+atoi = ascii to intiger / 아스키코드 -> 즉, const char*의미 / atol, atof도 있음
+
+
+int -> string 형변환
+
+to_string(변수);
+*/
+
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+bool compare(string& a, string& b) // 본체가 바뀌어야 하므로 call by reference
+{
+
+    return a + b > b + a;
+    
+}
+
+string solution(vector<int> numbers) {
+
+    vector<string> numbers_string(numbers.size());
+    string answer = "";
+
+    for (int i = 0; i < numbers.size(); i++)
+        numbers_string[i] = to_string(numbers[i]);
+
+    sort(numbers_string.begin(), numbers_string.end(), compare);
+
+    if (numbers_string[0] == "0") return "0"; // "0..0" = "0"
+    
+    for (int i = 0; i < numbers_string.size(); i++)
+        answer += numbers_string[i];
+    
+    
+    return answer;
+}
