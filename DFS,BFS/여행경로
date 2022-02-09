@@ -4,6 +4,8 @@
   방문여부 bool 벡터 v생성
   방문시 visited = true; 길이 끊긴다면, 이전 공항 visited = false로 다시 변경 후 탐색 ->dfs
   
+  *** dfs 함수 재귀호출 뒤에 조건 초기화 안할시 dfs가 아닌 그냥 재귀호출로 되버림에 주의 *** 
+  
 1. dfs 및 재귀호출에서 while문보단 count를 세서 if(count == 특정값)일 때 리턴하는게 나은듯 함(어차피 조건맞으면 break 해야하므로 쓰나마나 인듯 함)
 
 2. cnt == tickets.size()가 아닐 때도 함수가 종료가 되었음 -> 함수 반환형 void일 땐 return 없어도 함수코드 모두 실행시 종료됨
