@@ -1,0 +1,60 @@
+/* 알파벳 우선순위로 방문해야하므로 -> 알파벳순 정렬하여 모두 방문하였을 경우true
+ 
+  예외처리 : 알파벳 우선순위로 방문시 모든 공항을 방문하지 않고 길이 끊길 때
+  방문여부 bool 벡터 v생성
+  방문시 visited = true; 길이 끊긴다면, 이전 공항 visited = false로 다시 변경 후 탐색 ->dfs
+  
+1. dfs 및 재귀호출에서 while문보단 count를 세서 if(count == 특정값)일 때 리턴하는게 나은듯 함(어차피 조건맞으면 break 해야하므로 쓰나마나 인듯 함)
+
+2. cnt == tickets.size()가 아닐 때도 함수가 종료가 되었음 -> 함수 반환형 void일 땐 return 없어도 함수코드 모두 실행시 종료됨
+
+3. 재귀호출 인자로 cnt 넣을 시 cnt+1 말고 ++cnt/cnt++(전위/후위연산) 쓰지말자
+-> 일반적일 떈 후위연산은 call by value일 때 의미없고, 전위연산은 괜찮으나
+cnt값 자체를 바꾸므로 for문 안에서 여러번 실행되면 문제생겨서 둘다 쓰면안됨
+
+*/
+
+
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+vector<string> answer;
+
+bool compare(vector<string> a, vector<string> b) // 같은 공항일때 경로 알파벳순 정렬
+{
+    if (a[0] == b[0])
+      return a[1] < b[1];
+}
+
+void dfs(vector<vector<string>>& tickets, string now, vector<string> v, int cnt, vector<bool> visited)
+{
+    v.push_back(now);
+    
+    if (cnt == tickets.size())
+    {
+        answer = v;
+        return;
+    }
+        for (int i = 0; i < tickets.size(); i++)
+        {
+            if (tickets[i][0] == now && visited[i] == false)
+            {
+                 visited[i] = true;
+                 dfs(tickets, tickets[i][1], v, cnt+1, visited);
+                 visited[i] = false;
+            }
+        }        
+        v.pop_back();
+}
+
+vector<string> solution(vector<vector<string>> tickets) {
+    vector<string> v;
+    vector<bool> visited(tickets.size(), false);
+    
+    sort(tickets.begin(), tickets.end(), compare);
+    dfs(tickets, "ICN", v, 0, visited);
+    
+    return answer;
+}
