@@ -1,0 +1,5 @@
+SELECT name
+FROM 
+(SELECT MIN(datetime) min_date 
+ FROM animal_ins A) A, animal_ins B
+WHERE A.min_date = B.datetime;
