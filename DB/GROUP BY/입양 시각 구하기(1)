@@ -1,0 +1,5 @@
+SELECT HOUR(datetime), count(*)
+FROM animal_outs
+WHERE HOUR(datetime) >= 9 AND HOUR(datetime) <= 20
+GROUP BY HOUR(datetime)
+ORDER BY HOUR(datetime);
