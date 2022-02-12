@@ -1,0 +1,60 @@
+
+stl
+https://blog.naver.com/kgr2626/222122425089
+
+set/map
+https://modoocode.com/224
+
+set
+stl 연관컨테이너 -> 시퀀스 컨테이너와 달리(순차적) 객체들을 임의의 공간에 저장 
+원소의 존재유무만을 확인시 유용
+트리를 이용해 구현 -> 느슨한 정렬구조
+O(logN)보장
+중복key값 insert시 값 없어짐 -> 멀티셋 사용해야 함
+원소 트리형으로 정렬됨 -> 오름차순
+키 값만을 저장하기 때문에 여러 값 넣을시 객체로 넣어야함
+객체로 넣을 시, 비교방법이 모호해지기 때문에 비교함수 구현해야 함(operator 등)
+또한, 객체형으로 2개 이상의 변수를 가질 때, 비교대상인 변수가 같으면 마찬가지로 중복제거 되므로,
+나머지 변수의 정렬방식 또한 비교함수에 포함시켜야 함
+
+map
+set과 비슷한 자료구조이나, set이 키 값만을 보관함과 달리 value까지도 같이 보관함 ->pair형
+pair의 경우 자료형의 타입을 설정해주어야 하므로 번거로움
+-> make_pair함수 사용하면 자료형 자동추론하여 insert
+
+operator을 사용하여 map명[key] = value; 로 insert 할 수도 있음
+하지만 이 때, value값이 default면, 자동추론하여 value를 넣으므로 ex)double의 경우 0
+iterator/find()함수를 이용하여 해당원소를 찾지 못했을 때 (iter != map.end())일 때 원소를 반환하는 함수 구현 권장
+
+set과 마찬가지로 중복key값 insert시 값 없어짐 -> 멀티맵 사용해야 함
+
+multimap
+key 동일/value 다른 원소 여러개 존재시, 동일 key값 출력시 value중 랜덤으로 나옴
+->equal_range() 함수 사용 
+
+map.equal_range(key) 
+key를 받은 뒤에, 대응되는 원소들의 시작과 끝 바로 다음을 가리키는 반복자를 pair로 return
+
+ex) auto range = m.equal_range(1);
+  for (auto itr = range.first; itr != range.second; ++itr) {
+  std::cout << itr->first << " : " << itr->second << " " << std::endl; }
+
+unordered_set, unordered_map
+원소를 order하지않고 insert -> 정렬된 순서/원소를 insert한 순서도 아닌 랜덤으로 출력됨
+set/map이 O(lonN)임과 달리 O(1) -> 해시 함수를 사용하기 때문
+
+hashset/hashmap이란 명칭을 사용하려 했으나 이미 이런이름을 너무 많이 사용하고 있어서 이런 이름을 골랐다고 함
+
+해시 충돌이 발생할 수 있고, 모든 원소가 하나의 해시테이블에 저장 될 경우 최악 O(N) 
+따라서, 보통 안전하게 set/map을 사용하고, 최적화가 필요할 경우 해시 함수를 잘 설계하여 사용
+-> set/map은 최선/최악 모두 O(logN)
+but 기본 타입들의 경우 라이브러리 자체적으로 해시 함수 내장 -> 그냥 사용하면 됨
+
+메모리 낭비를 막기 위해 처음부터 많은 해시테이블을 사용하지 않으므로, 원소가 많아짐에 따라 점진적 증가
+-> 슬롯 및 버켓/원소가 증가함에 따라 최적화를 위해 해시함수를 바꾸고, 원소를을 다시 insert함을 rehash라고 하며, O(N) 소요
+
+
+
+
+set, map둘다 for문을 이용한 접근을 허용하지만, 시퀀스 컨테이너가 index로 접근할 수 있었던 반면에 key값으로 구분하므로 key가 연속적이지 않을 경우가 많으므로
+->iterator 사용하여 출력 및 접근
