@@ -36,7 +36,7 @@ bool solution(vector<string> phone_book) {
     {
         for (auto h : hash)
         {
-            if (p[0] == h[0]) // 정렬되어 있으므로, [0]이 같지 않아지면 for문 break;
+            if (p[0] == h[0]) // [0]이 같을때만 비교
             {
                 if (p.length() < h.length()) // 길이가 같으면 동일값이거나 다른 값이므로
                 {
