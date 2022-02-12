@@ -1,1 +1,42 @@
-ㅇ
+/*
+    참가자 이름을 key, 완주여부를 value로 놓고 미완주인 한명(value값이 다른 한명) 탐색
+    
+    key값의 존재여부 뿐만 아니라 value값도 확인해야 함 = map사용 / 정렬 불필요 = unordered 사용
+    
+    동명이인 있을 수 있음 -> key값이 동일할 수 있음
+    -> 동명이인이 완주/미완주일시(key값 동일, value값 다) 생각해야 함
+
+    한명일 시 -> 완주하면 0, 미완주시 1
+    여러명 일시 -> 완주하면 0 미완주자 있을시 1 
+    
+    pair가 아닌 원소쌍일 때 first, second로 접근할 수 있으나, pair일 때 []로 접근은 불가능
+*/
+
+
+#include <string>
+#include <vector>
+#include <unordered_map>
+
+using namespace std;
+
+string solution(vector<string> participant, vector<string> completion) {
+    string answer = "";
+    unordered_map<string, int> hash;
+
+   for (auto part : participant)
+    {
+       hash[part]++;
+    }
+   
+   for (auto comp : completion)
+   {
+       hash[comp]--;
+   }
+   
+   for (auto h : hash)
+   {
+       if (h.second != 0)
+           answer = h.first;
+   }
+    return answer;
+}
