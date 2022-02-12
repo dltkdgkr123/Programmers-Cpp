@@ -1,0 +1,78 @@
+/*
+    접두어 -> 단어의 앞에(머리 두)에 붙어 다른 낱말을 이루는 단어   유의어 : 접미어
+    -> key값의 중간이나 끝에 붙지 않으므로 앞만 비교하면 됨
+
+    동일한 전화번호는 없다 -> key값 중복x
+
+   "어떤" 번호가 다른 번호의 접두어이다 -> 벡터 모든원소 비교해야 함
+
+   접두어가 하나라도 존재하면 return -> cnt 필요x
+
+   자기자신 제외해야 함
+*/
+
+
+/*
+    접두어 -> 단어의 앞에(머리 두)에 붙어 다른 낱말을 이루는 단어   유의어 : 접미어
+    -> key값의 중간이나 끝에 붙지 않으므로 앞만 비교하면 됨
+
+    동일한 전화번호는 없다 -> key값 중복x
+
+   "어떤" 번호가 다른 번호의 접두어이다 -> 벡터 모든원소 비교해야 함
+
+   접두어가 하나라도 존재하면 return -> cnt 필요x
+
+   자기자신 제외해야 함
+*/
+
+
+/*
+
+    정확성 만점 효율성 0 코드
+
+#include <string>
+#include <vector>
+#include <unordered_set>
+
+using namespace std;
+
+bool solution(vector<string> phone_book) {
+    bool answer = true;
+
+    unordered_set<string> hash;
+
+    for (auto p : phone_book)
+    {
+        hash.insert(p);
+    }
+
+    for (auto p : phone_book)
+    {
+        for (auto h : hash)
+        {
+            if (p[0] == h[0]) // 정렬되어 있으므로, [0]이 같지 않아지면 for문 break;
+            {
+                if (p.length() < h.length()) // 길이가 같으면 동일값이거나 다른 값이므로
+                {
+                    for (int i = 1; i <= p.length(); i++) // [1]부터 끝까지 비교
+                    {
+                        if (i == p.length()) // 여기까지 오면 접미어이므로
+                        {
+                            answer = false;
+                            break;
+                        }
+                        if (p[i] == h[i])
+                            continue; // 일치하면 계속 비교
+                        else break;
+
+                    }
+                }
+            }
+
+        }
+    }
+
+    return answer;
+}
+
+*/
