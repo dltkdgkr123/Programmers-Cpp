@@ -25,7 +25,7 @@ bool solution(vector<string> phone_book) {
 
     for (int i = 0; i < phone_book.size()-1; i++)
     {
-        if(phone_book[i+1].find(phone_book[i], phone_book[i + 1].size()) == 0) // != -1로 하면 다음인덱스 문자열 중간에 포함되었을 떄도  오답이였음
+        if(phone_book[i+1].find(phone_book[i], phone_book[i + 1].size()) == 0) // != -1로 하면 다음인덱스 문자열 중간에 포함되었을 떄도 해당되므로 
         {
             return false;
             break;
