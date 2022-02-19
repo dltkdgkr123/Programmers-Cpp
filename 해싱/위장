@@ -12,6 +12,7 @@ answer = 1; -> 벡터들을 곱해나가야 하므로 0이 되지 않기위해
 
 key = 0이 아닌값을 찾는 대신에, iterator을 사용할 수도 있다.
 
+같은 의상 (중복된 value)가 없으므로, multimap을 쓸 필요 없이 해당 부위의 의상이 들어오면 value의 int값을 ++한다
 */
 
 #include <string>
