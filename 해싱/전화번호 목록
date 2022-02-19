@@ -6,7 +6,7 @@
 
    "어떤" 번호가 다른 번호의 접두어이다 -> 벡터 모든원소 비교해야 함
 
-   접두어가 하나라도 존재하면 return -> cnt 필요x
+   접두어가 하나라도 존재하면 return -> cnt 필요없이 찾으면 리턴 후 바로 종료해야 실행시간 줄어듦
 
    자기자신 제외해야 함
    
@@ -15,9 +15,37 @@
 */
 
 
-/*
+ // 코드 1번 - 정렬사용
+ //    string 정렬기준 = 12 > 1245 > 1254 > 2 이므로, i+1 인덱스에서 i 인덱스값 find == 0이면 false
+ // 정확도,효율 100점 but 해싱 사용하지 않았음
+ 
+#include <string>
+#include <vector>
+#include <algorithm>
 
-    정확성 만점 효율성 0 코드
+using namespace std;
+
+bool solution(vector<string> phone_book) {
+
+    sort(phone_book.begin(), phone_book.end());
+
+    for (int i = 0; i < phone_book.size()-1; i++)
+    {
+        if(phone_book[i+1].find(phone_book[i], phone_book[i + 1].size()) == 0)
+        {
+            return false;
+            break;
+        }
+    }
+    return true;
+}
+
+
+
+
+/*
+     코드 2번 - 해싱 사용했으나,
+    정확성 100 효율성 0
 
 #include <string>
 #include <vector>
