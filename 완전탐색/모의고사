@@ -1,0 +1,49 @@
+/*
+
+배열 : 벡터 인덱스로 비교
+인덱스 i를 arraysize로 나누어 메모리낭비 x
+
+*/
+
+#include <string>
+#include <vector>
+#include <iostream>
+
+using namespace std;
+
+vector<int> solution(vector<int> answers) {
+    vector<int> answer;
+    int n1[] = { 1,2,3,4,5 };
+    int n2[] = { 2,1,2,3,2,4,2,5 };
+    int n3[] = { 3,3,1,1,2,2,4,4,5,5 };
+
+    int c1 = 0;
+    int c2 = 0;
+    int c3 = 0;
+    int max = 0;
+
+    for (int i = 0; i < answers.size(); i++)
+    {
+        if (answers[i] == n1[i%5])
+            c1++;
+        if (answers[i] == n2[i%8])
+            c2++;
+        if (answers[i] == n3[i%10])
+            c3++;
+    }
+    
+    if (max < c1)
+        max = c1;
+    if (max < c2)
+        max = c2;
+    if (max < c3)
+        max = c3;
+
+    if (max == c1)
+        answer.push_back(1);
+    if (max == c2)
+        answer.push_back(2);
+    if (max == c3)
+        answer.push_back(3);
+    return answer;
+}
