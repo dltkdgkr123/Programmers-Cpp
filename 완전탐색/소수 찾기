@@ -1,0 +1,72 @@
+
+
+
+
+
+
+
+/*
+
+실행시간 초과 코드 -> dfs 복잡도 10^N×N! 
+
+
+#include <string>
+#include <vector>
+#include <unordered_set>
+#include <algorithm>
+
+using namespace std;
+
+unordered_set<string> sosu;
+
+bool is_true(float n) // (int)a -> (float)a 소수인지 확인하는 함수
+{
+    bool b = true;
+
+    for (int i = 2; i < n; i++) // 소수n : 2부터 n-1까지 나누었을 때 나머지가 0이 아님
+    {
+        
+        if ((n/i - (int)n/i) == 0) // (float)x - (int)x == 0 -> 나머지가 0이면
+        {
+            b = false;
+            break;
+        }
+    }
+    return b;
+}
+
+
+void dfs(string& numbers, vector<int> v, string s)
+{
+
+    for (int i = 0; i < numbers.length(); i++)
+    {
+        if (find(v.begin(), v.end(), i) != v.end()) // i번쨰를 사용하지 않았으면
+            v.push_back(i); // i를 사용했다고 표시하고
+            s += numbers[i]; // s에 숫자를 더함
+
+        if (is_true(stof(s)) == true) // int s가 소수이면
+            sosu.insert(s); // set에 insert -> 중복제거 위해 set 사용
+
+        dfs(numbers, v, s); //dfs 실행
+        v.pop_back();  // 다음 반복을 위해 최근 추가한 값 제거
+        s.erase(s.end());
+    }
+
+}
+
+int solution(string numbers) {
+    int answer = 0;
+    vector<int> v;
+
+    dfs(numbers, v, "");
+
+    unordered_set<string>::iterator iter = sosu.begin();
+
+    for (auto iter = sosu.begin(); iter != sosu.end(); iter++)
+        answer++;
+
+    return answer;
+}
+
+*/
