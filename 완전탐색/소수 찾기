@@ -25,7 +25,7 @@ find() #include <algorithm>에 포함됨에 주의
 
 /*
 
-실행시간 초과 코드 -> dfs 복잡도 10^N×N! 
+실행시간 초과 코드
 
 
 #include <string>
