@@ -19,13 +19,131 @@ find() #include <algorithm>에 포함됨에 주의
 */
 
 
+/*
 
+실행시간 초과1
+
+
+#include <string>
+#include <vector>
+#include <math.h>
+#include <algorithm>
+#include <set>
+#include <iostream>
+
+using namespace std;
+
+set<int> s_sosu; //set 이용하여 정렬 및 중복제거
+set<int> s_dfs;
+
+void sosu(int a) // 에라토스테네스의 체로 소수를 구하는 함수
+{
+
+	
+	int sqrt_a = sqrt(a);
+	vector<int> v;
+	
+	for (int i = 0; i <= a; i++)
+		v.push_back(i);
+
+	for (int i = 0; i <= 1; i++) // 0,1 제외
+		v[i] = 0;
+
+	for (int i = 2; size_t(2) * size_t(i)< v.size(); i++) // 2를 제외한 짝수 제외
+		v[size_t(2) * size_t(i)] = 0;
+	
+
+
+	for (int i = 3; i <= sqrt_a; i++) //3부터 (정수형)제곱근 까지
+	{
+		if (i % 2 != 0 && v[i] != 0) // 홀수이고 소수면
+		{
+			for (int j = 2; size_t(j) * size_t(i) < v.size(); j = j++) // 자기자신 제외한 배수 제외
+				v[size_t(j) * size_t(i)] = 0;
+		}
+	}
+		
+	for (int i = 0; i < v.size(); i++) // 제외되지 않은 값 push
+		if (v[i] != 0)
+			s_sosu.insert(v[i]);
+	
+}
+
+void dfs(string& numbers, vector<bool> visited, string s) // dfs로 string으로 만들 수 있는 모든 수를 찾는 함수
+{
+	for (int i = 0; i < numbers.length(); i++)
+	{
+		if (visited[i] == false) // 방문하지 않았으면
+		{
+			s += numbers[i];
+			visited[i] = true;
+
+			s_dfs.insert(stoi(s)); // 모든 자리수를 넣어야 하므로 먼저 insert 
+			
+			dfs(numbers, visited, s); // dfs실행 후 현상복귀
+			s.erase(s.end()-1); // end()-1 까지가 문자열, end()는 null값
+			visited[i] = false;
+		}
+	}
+}
+
+int solution(string numbers) {
+
+
+	int answer = 0;
+	vector<bool>visited(numbers.size(), false); // numbers 크기의 방문여부기록 벡터 생성
+
+	sort(numbers.begin(), numbers.end(), greater<>()); // numbers를 최대값으로 정렬
+
+	sosu(stoi(numbers)); // 최대값 이하 소수 탐색
+	dfs(numbers, visited, ""); // string으로 만들수 있는 모든 수 탐색
+
+	set<int>::iterator iter = s_sosu.begin();
+	set<int>::iterator iter2 = s_dfs.begin();
+	
+
+	while (iter != s_sosu.end() && iter2 != s_dfs.end()) { // 최대값과 이하 소수와 string으로 만들 수 있는 모든수를 비교하여 일치하면 answer++;
+
+		if (*iter == *iter2)
+		{
+			answer++;
+			iter++;
+		}
+
+		else if (*iter < *iter2)
+			iter++;
+
+		else if (*iter > *iter2)
+			iter2++;
+
+	}
+	
+	return answer;
+}
+
+int main() {
+	clock_t startTime = clock();
+
+	int a;
+	a = solution("1231");
+
+	cout << a << "\n"; // 값 = "1231" 결과 = 18 [2, 3, 11, 13, 23, 31, 113, 131, 211, 311, 1123, 1213, 1231, 1321, 2113, 2131, 2311, 3121]
+
+	clock_t endTime = clock();
+
+	clock_t elapsed = endTime - startTime;
+	double timeInSecond = (double)(elapsed / CLOCKS_PER_SEC);
+
+	cout << "실행시간: " << timeInSecond << "s(" << elapsed << "ms)" << "\n";
+
+}
+
+*/
 
 
 
 /*
-
-실행시간 초과 코드
+실행시간 초과2
 
 
 #include <string>
