@@ -19,6 +19,7 @@ find()함수 string은 string헤더, vector는 algorithm 헤더에 포함됨에 
 조건문 및 return문에 if(a%b == 0) 대신 if(a%b)로 간략하게 쓸 수 있음/ 해당시마다 answer을 ++하여 최종 return하지않고 답이 저장된 컨테이너의 size를 return할 수 있음
 bool 함수를 구현하여 false/true 여부에 따라 해당값을 집어넣는 방식을 쓸 수 있음
 dfs을 사용하지 않더라도 while()에 next_permutation()을 넣고, for문/for each문으로 string을 놓고 char을 더하는 방식으로 모든 경우의 수를 구할 수 있음
+-> 방식은 dfs와 유사하나, 순환호출을 하지 않으므로 실행시간/메모리에 훨씬 유리할듯 함
 -> next_permutation()는 다음수열로 바꿔주고, 반환하였다면 함수 자체는 true를 반환한다. 함수 뜻 자체가 "다음"수열이므로 현재수열도 사용해야 할 땐 do while문을 
 -> int <-> char은 굳이 명시하지 않아도 자동 형변환되나 (char)0~9는 (int)48~57임에 주의, 자리수를 늘려가며 대입하고 싶을 땐 10을 곱해가며 +=해준다
 
