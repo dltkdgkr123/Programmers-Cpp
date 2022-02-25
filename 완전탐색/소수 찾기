@@ -9,14 +9,74 @@
 정렬 후 만들어지는 가장 큰 수를 찾은 후, 그 소수 내에서 일치여부만 확인
 그 수보다 작은 소수들을 구한 후, 만들어지는 numbers의 조합들과 비교
 
-맨 앞 0일때 예외처리
-
 find() #include <algorithm>에 포함됨에 주의
  v.find(...) 가 아닌 find(...)에 주의 
  
 반복문에서 dfs 쓸 때 항상 재귀호출 후 현상유지 시켜야함에 주의
   
+ ----------------------------------------------------클론 코딩에서 배운 점-------------------------------
+ 
+조건문 및 return문에 if(a%b == 0) 대신 if(a%b)로 간략하게 쓸 수 있음/ 해당시마다 answer을 ++하여 최종 return하지않고 답이 저장된 컨테이너의 size를 return할 수 있음
+bool 함수를 구현하여 false/true 여부에 따라 해당값을 집어넣는 방식을 쓸 수 있음
+dfs을 사용하지 않더라도 while()에 next_permutation()을 넣고, for문/for each문으로 string을 놓고 char을 더하는 방식으로 모든 경우의 수를 구할 수 있음
+-> next_permutation()는 다음수열로 바꿔주고, 반환하였다면 함수 자체는 true를 반환한다. 함수 뜻 자체가 "다음"수열이므로 현재수열도 사용해야 할 땐 do while문을 
+-> int <-> char은 굳이 명시하지 않아도 자동 형변환되나 (char)0~9는 (int)48~57임에 주의, 자리수를 늘려가며 대입하고 싶을 땐 10을 곱해가며 +=해준다
+
 */
+
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <unordered_set>
+#include <iostream>
+using namespace std;
+
+bool isPrime(int a)
+{
+
+        if(!(a % 2) && a != 2) // 짝수고 2가 아니면 false
+            return false;
+    
+        for (int i = 3; i * i <= a; i += 2) // a>=9일 떄 (3,5,7은 소수) 3부터 a의 제곱근까지 홀수만큼 반복
+        {
+            if (!(a % i)) // i로 나눠떨어지면 false -> true이면 false
+                return false;
+            
+        }
+
+        return a>1; // 2 이상이면 true -> 0,1이면 위 조건문 모두 실행하지않음/false
+
+
+}
+
+int solution(string numbers) {
+    int answer = 0;
+    unordered_set<int> s; // 중복여부만 판독, 정렬필요 x
+
+    sort(numbers.begin(), numbers.end()); // 수열탐색을 위해 오름차순 정렬
+
+    do // next_permutation가 다음수열부터 이므로 do while문 사용
+    {
+        int number = 0;
+
+        for (char c : numbers)
+        {
+            number = number * 10 + (c - '0'); // 처음엔 number =0이니 곱해도 무관 앞자리 0이여도 지장없음
+
+            if (isPrime(number)) // 소수면 set에 insert
+                s.insert(number);
+        }
+
+    } while (next_permutation(numbers.begin(), numbers.end())); // 다음 수열로 바꾸고 함수는 true 반환 -> 다음수열 없으면 false 반환
+
+
+    return s.size(); // 중복제거한 원소의 개수 return
+}
+
+
+
+
+
 
 
 /*
