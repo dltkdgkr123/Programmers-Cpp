@@ -9,7 +9,7 @@
 정렬 후 만들어지는 가장 큰 수를 찾은 후, 그 소수 내에서 일치여부만 확인
 그 수보다 작은 소수들을 구한 후, 만들어지는 numbers의 조합들과 비교
 
-find() #include <algorithm>에 포함됨에 주의
+find()함수 string은 string헤더, vector는 algorithm 헤더에 포함됨에 주의
  v.find(...) 가 아닌 find(...)에 주의 
  
 반복문에서 dfs 쓸 때 항상 재귀호출 후 현상유지 시켜야함에 주의
