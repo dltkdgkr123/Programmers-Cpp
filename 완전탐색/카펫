@@ -1,0 +1,38 @@
+/* 
+
+c++에서 다른 자료형끼리 연산하면 범위가 넓은 자료형으로 바뀜<암시적 형 변환(implicit type conversion)> -> 형 확장(type promotion) 
+
+조건) 가로길이 >= 세로길이
+
+갈색이 각각 가로/세로로 노랑보다 2개 더 많음
+
+
+*/
+#include <string>
+#include <vector>
+
+using namespace std;
+
+vector<int> solution(int brown, int yellow) {
+    vector<int> answer;
+    vector<pair<int, int>> divisor;
+    float size = brown + yellow; // 전체사이즈
+
+    for (int i = 1; i * i <= size; i++) // i = 1~size제곱근 이하까지
+    {
+        float j = size / i;
+        if (j == (int)j) // 나누어떨어지면
+        divisor.push_back(make_pair(i, j)); // 약수 쌍 push
+    }
+
+    for (int i = 0; i < divisor.size();i++)
+    {
+        if (yellow == (divisor[i].second - 2) * (divisor[i].first - 2)) // size의 약수쌍 중 각각 -2하여 노랑이 만들어지면 정답
+        {
+            answer.push_back(divisor[i].second); // 가로길이가 세로길이보다 같거나 크므로 -> 약수 중 뒤원소가 가로
+            answer.push_back(divisor[i].first);
+        }
+    }
+        return answer;
+
+}
