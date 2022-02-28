@@ -16,17 +16,17 @@ using namespace std;
 long long binary_search(int n, vector<int> times)
 {
 	long long start = 0;
-	long long end = times.back() * n;
+	long long end = times.front() * n; // 시간이 가장 적게 걸리는 심사원에게만 받을 때 (times.back())으로 놔도 테케의 종류에 조금의 변동이있을 뿐 더 낫지는 않음)
 	long long mid = end / 2;
 
 	while (1)
 	{
 		long long value = 0;
 		for (int i = 0; i < times.size(); i++)
-			value += mid / times[i];
+			value += mid / times[i]; // 해당 시간에 각각의 심사위원이 심사가능한 사람수의 합
 
 		if (value == n)
-			return mid;
+			return mid; // 대략의(최소값인지 아직 모르는) mid 리턴
 
 		else if (value < n) // value가 커져야 함
 		{
@@ -50,7 +50,7 @@ long long solution(int n, vector<int> times) {
 	
 	long long mid = binary_search(n, times);
 	
-	while (1)
+	while (1) // 심사 가능한 인원수가 같지 않을때 까지 mid를 --한 후, 달라지면 ++값 리턴
 	{
 		int value = 0;
 		
