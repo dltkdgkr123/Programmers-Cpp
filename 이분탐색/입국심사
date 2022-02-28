@@ -61,7 +61,7 @@ long long solution(int n, vector<int> times) {
 		if (value == n)
 			mid--;
 
-		else return mid++;
+		else return ++mid;
 		
 	}
 
