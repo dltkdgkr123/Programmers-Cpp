@@ -1,0 +1,70 @@
+
+
+/* 시간초과 코드 (테케 9개 중 2개 초과)
+   대략의 mid 값을 구한 후, 추후 mid를 1씩 줄여가며 값이 바뀌기 전까지 구하여 최소값을 찾는 코드
+*/
+
+/*  
+
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+long long binary_search(int n, vector<int> times)
+{
+	long long start = 0;
+	long long end = times.back() * n;
+	long long mid = end / 2;
+
+	while (1)
+	{
+		long long value = 0;
+		for (int i = 0; i < times.size(); i++)
+			value += mid / times[i];
+
+		if (value == n)
+			return mid;
+
+		else if (value < n) // value가 커져야 함
+		{
+
+			start = mid;
+			mid = (start + end) / 2;
+		}
+
+		else if (value > n) // value가 작아져야 함
+		{
+			end = mid;
+			mid = (start + end) / 2;
+
+		}
+
+	}
+}
+
+long long solution(int n, vector<int> times) {
+	sort(times.begin(), times.end());
+	
+	long long mid = binary_search(n, times);
+	
+	while (1)
+	{
+		int value = 0;
+		
+		for (int i = 0; i < times.size(); i++)
+		{
+			value += mid / times[i];
+		}
+
+		if (value == n)
+			mid--;
+
+		else return mid++;
+		
+	}
+
+}
+
+*/
