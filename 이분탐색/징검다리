@@ -1,0 +1,64 @@
+/*
+
+테스트 케이스 모두 정답은 나오나 시간초과인 코드 - dfs로 구현
+크기가 충분히 크다고 명시된 벡터를 수시로 earse/대입 및 재귀호출(dfs)을 사용하여 시간초과가 될 것은 예상했으나 기발한 아이디어라고 생각하여 구현하였다.
+
+0~rocks~distance를 넣은채로 바위사이의 모든 거리(v[i+1]-v[i])를 v에 push후,
+n>0일 동안 rocks[i]이 지워질 때 마다 거리를 담은 벡터 v의 v[i]와 v[i+1]을 더하는 방식으로 dfs탐색
+n<=0이면 최소값 v3에 push후 종료
+v3의 최대값 리턴
+
+
+#include <string>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+vector<int> v3;
+void dfs(vector<int> v, vector<int> v2, int n)
+{
+
+    if (n <= 0)
+    {
+        v3.push_back(*min_element(v.begin(), v.end()));
+        return;
+    }
+
+    for (int i = 0; i < v.size()-1; i++)
+    {
+        if (n > 0)
+        {
+            v[i+1] += v[i];
+            v.erase(v.begin()+i);
+            n--;
+
+            dfs(v, v, n);
+            n++;
+            v = v2;
+            
+        }
+    }
+}
+
+
+int solution(int distance, vector<int> rocks, int n) {
+    int answer = 0;
+
+    vector<int> v;
+    rocks.push_back(distance);
+
+    sort(rocks.begin(), rocks.end());
+    v.push_back(rocks[0]);
+
+    for (int i = 0; i < rocks.size() - 1; i++)
+        v.push_back(rocks[i + 1] - rocks[i]);
+
+
+    dfs(v, v, n);
+    
+    return *max_element(v3.begin(), v3.end());
+}
+
+*/
