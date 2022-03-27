@@ -1,0 +1,49 @@
+/*
+
+내림차순 정렬 후 deque에 push
+
+몸무게가 제일 작은 사람과 제일 작은사람이 구명보트에 같이 탈 수 있으면 pop후 answer++; -> 부분의 최적 해
+탈 수 없으면 맨 앞 사람은 따로 타야하므로 front를 pop후 answer++;
+
+1명이 남는다면 혼자 타야하므로 answer++;
+
+*/
+
+
+#include <string>
+#include <vector>
+#include <queue>
+#include <algorithm>
+
+using namespace std;
+
+int solution(vector<int> people, int limit) {
+    int answer = 0;
+    deque<int> dq;
+
+    sort(people.begin(), people.end(), greater<>());
+
+    for (int i = 0; i < people.size(); i++)
+        dq.push_back(people[i]);
+   
+    while (dq.size() > 1)
+    {
+        if (dq.front() + dq.back() <= limit)
+        {
+            dq.pop_front();
+            dq.pop_back();
+            answer++;
+        }
+        else
+        {
+            dq.pop_front();
+            answer++;
+        }
+
+    }
+
+    if (dq.size() == 1)
+        answer++;
+
+    return answer;
+}
