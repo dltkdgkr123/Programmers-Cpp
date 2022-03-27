@@ -1,0 +1,40 @@
+/*
+idx보다 idx+1이 크면 idx문자 삭제 후 idx를 0으로 초기화
+
+k가 남아있지만 999/54321 등 idx+1이 idx보다 큰 숫자만 남을 경우 end()-1 삭제 후 idx를 0으로 초기화  
+
+*/
+
+#include <string>
+#include <vector>
+#include <iostream>
+
+using namespace std;
+
+string solution(string number, int k) {
+
+    int idx = 0;
+
+
+    
+    while ( k > 0 )
+    {
+        if(idx == number.length()-1)
+        {
+            number.erase(number.end()-1);
+            k--;
+            idx = 0;
+        }
+            
+        if (number[idx + 1] > number[idx])
+        {
+            number.erase(number.begin()+idx);
+            k--;
+            idx = 0;
+        }
+        else idx++;           
+    }
+
+    
+    return number;
+}
