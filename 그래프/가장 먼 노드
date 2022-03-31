@@ -1,6 +1,6 @@
 
 
-/* dfs쓰다 망한코드 -> [1,3] [3,2] 등일 때 처리불가
+/* dfs쓰다 망한코드 -> vertex = [1,3],[3,2] 등일 때 처리불가
 
 #include <string>
 #include <vector>
