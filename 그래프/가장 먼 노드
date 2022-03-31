@@ -1,0 +1,60 @@
+
+
+/* dfs쓰다 망한코드
+
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <iostream>
+
+using namespace std;
+
+vector<int> cnts;
+
+void dfs(vector<vector<int>>& edge, int pre_edge, int cnt)
+{
+    for (int i = 0; i < edge.size(); i++)
+    {
+        if (edge[i][0] == pre_edge)
+        {
+            dfs(edge, edge[i][1], cnt + 1);
+        }
+    }
+
+    if (cnt < cnts[pre_edge - 1]) // 최단거리 갱신 -> 배열은 0/정점은 1부터 시작하므로 -1
+        cnts[pre_edge - 1] = cnt;
+
+}
+
+int solution(int n, vector<vector<int>> edge) {
+    int answer = 0;
+    int max;
+    vector<int> v(n, n);
+    cnts = v;
+
+    for (int i = 0; i < edge.size(); i++)
+    {
+        int tmp = edge[i][0];
+
+        if (tmp > edge[i][1])
+        {
+            edge[i][0] = edge[i][1];
+            edge[i][1] = tmp;
+        }
+    }
+
+
+    dfs(edge, 1, 0);
+    
+    
+    max = *max_element(cnts.begin(), cnts.end());
+
+    for (int i = 0; i < cnts.size(); i++)
+    {cout << cnts[i];
+        if (cnts[i] == max)
+            answer++;
+    }
+    return answer;
+}
+
+*/
