@@ -1,0 +1,50 @@
+/*
+(int)0~9 == (char)48~57
+57보다 크면 알파벳이므로 s[i],s[i+1] 두개를 배열과 비교하여 두자리 문자가 일치하면 해당num배열의 인덱스 반환 후 다음 숫자까지 i를 증가 
+*/
+
+#include <string>
+#include <vector>
+#include <iostream>
+
+using namespace std;
+
+int solution(string s) {
+    int answer = 0;
+    vector<string> num = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+
+    for (int i = 0; i < s.length(); i++)
+    {
+        int n = (int)s[i];
+
+        if (n > 57)
+        {
+            char first = s[i];
+            char second = s[i + 1];
+
+            for (int j = 0; j < num.size(); j++)
+            {
+                
+                if (num[j][0] == first)
+                {
+
+                    if (num[j][1] == second)
+                    {
+                        answer *= 10;
+                        answer += j;
+
+                        i += num[j].length()-1;
+                        break;                      
+                    }
+                }
+            }
+        }
+
+        else {
+            answer *= 10;
+            answer += (n-48);
+        }
+    }
+
+    return answer;
+}
