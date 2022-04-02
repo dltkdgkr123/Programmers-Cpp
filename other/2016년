@@ -1,0 +1,22 @@
+// a월 이전 일수를 모두 더한 후 b를 더한 후 금요일 부터이므로 +4 후 %7
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
+string solution(int a, int b) {
+    string answer = "";
+    int sum = 0;
+
+    int n[12] = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+    string days[7] = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
+
+    for (int i = 0; i < a - 1; i++)
+        sum += n[i];
+
+    sum += b;
+
+
+    return days[(sum+4)%7]; 
+}
