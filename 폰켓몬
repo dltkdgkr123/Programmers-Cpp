@@ -1,0 +1,28 @@
+// 정렬후 값이 달라질 때 마다 answer++후 해당 인덱스값으로 변경 -> answer == nums.size() / 2면 이미 최대값이므로 종료
+
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int solution(vector<int> nums)
+{
+    int answer = 1;
+    sort(nums.begin(), nums.end());
+    int value = nums[0];
+
+
+    for (int i = 0; i < nums.size(); i++)
+    {
+        if (nums[i] != value)
+        {
+            answer++;
+            value = nums[i];
+        }
+
+        if (answer == nums.size() / 2)
+            break;
+    }
+    
+    return answer;
+}
