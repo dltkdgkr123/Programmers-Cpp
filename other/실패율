@@ -1,0 +1,49 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <iostream>
+
+using namespace std;
+
+
+bool compare(pair<int, float> a, pair<int, float> b)
+{
+    if (a.second == b.second)
+        return a.first < b.first;
+
+    return a.second > b.second;
+
+}
+vector<int> solution(int N, vector<int> stages) {
+    vector<int> answer;
+    vector<int>v(N + 2, 0); // 해당 스테이지에 있는 사람을 담은 배열 -> 0번째 인덱스 제외, 1~N  / N+1 = 모두 clear한사람 
+    vector<pair<int, float>> v2; // 해당 스테이지 번호와 실패율을 담은 벡터
+
+    for (int i = 0; i < stages.size(); i++) // v에 스테이지에 있는 사람 저장
+        v[stages[i]]++;
+
+    for (int i = 1; i < v.size() - 1; i++) // 스테이지 번호와 실패율을 v2에 push -> 0번째 및 N+1번째 제외
+    {
+        int sum = 0;
+
+        for (int j = i; j < v.size(); j++) // 해당 스테이지 이상인 사람들을 더함
+            sum += v[j];
+
+        if(sum == 0) // 분모가 0일때 이상한 값 여기서는(-nan)이 발생하므로, 예외처리하여 0으로 처리
+            v2.push_back(make_pair(i, 0));
+        else
+        v2.push_back(make_pair(i, (float)v[i] / sum));    // 실패율 정수아님
+
+    }
+
+
+    sort(v2.begin(), v2.end(), compare); // 실패율순서 내림차순 정렬, 실패율 같으면 스테이지 번호 오름차순 정렬
+
+
+    for (int i = 0; i < v2.size(); i++)
+        answer.push_back(v2[i].first);
+
+
+
+    return answer;
+}
