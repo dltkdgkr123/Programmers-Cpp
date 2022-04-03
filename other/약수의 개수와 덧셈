@@ -1,0 +1,42 @@
+#include <string>
+#include <vector>
+#include <cmath>
+using namespace std;
+
+bool FindSign(int a)
+{
+    int cnt = 0;
+    int sqrt_a = sqrt(a);
+
+    if (sqrt_a * sqrt_a == a) // 예외처리 -> 제곱근으로 나눠떨어질 때 같은숫자 중복카운트 방지
+        cnt++;
+
+    for (int i = 1; i < sqrt_a; i++) // 제곱근 카운터했으므로 i < sqrt_a까지
+    {
+        int b = a / i;
+
+        if (b * i == a)
+            cnt += 2;
+    }
+
+    if (cnt % 2) // 홀수면 나머지1 -> 실행 -> true 반환
+        return true;
+
+    return false;
+}
+
+int solution(int left, int right) {
+    int answer = 0;
+
+    while (left <= right)
+    {
+        if (FindSign(left)) // true면 실행 -> 홀수이므로 뺄셈
+            answer -= left;
+        else answer += left;
+
+        left++;
+
+    }
+
+    return answer;
+}
