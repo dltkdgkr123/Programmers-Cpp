@@ -1,0 +1,29 @@
+#include <string>
+#include <vector>
+#include <iostream>
+
+using namespace std;
+
+
+int solution(int n) {
+    int answer = 0;
+
+    vector<int> v;
+
+    while (n) // 몫이 3미만일 때 -> m/3 == m%3이므로 따로처리 불필요
+    {
+        v.push_back(n%3);
+
+        n /= 3;
+    }
+
+    int n = 1;
+
+    for (int i = v.size(); i >= 0; i--)
+    {
+        answer += n * i;
+        n *= 3;
+    }
+    
+    return answer;
+}
