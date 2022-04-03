@@ -1,5 +1,6 @@
 // 정렬후 값이 달라질 때 마다 answer++후 해당 인덱스값으로 변경 -> answer == nums.size() / 2면 이미 최대값이므로 종료
 
+// 그냥 unordered_hash에 넣고 min((nums.size() / 2, s.size()); return 하는게 나음
 #include <vector>
 #include <algorithm>
 
