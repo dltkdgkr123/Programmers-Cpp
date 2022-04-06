@@ -1,0 +1,52 @@
+/*
+  공백 기준으로 앞뒤를 나누어 multimap에 저장 후, k보다 count가 높은 key만 set에 넣어 중복제거하여 그 후에도 k보다 크면 해당 문자열 값을 가진 answer 인덱스 ++
+
+*/
+#include <string>
+#include <vector>
+#include <unordered_map>
+#include <unordered_set>
+#include <iostream>
+
+using namespace std;
+
+vector<int> solution(vector<string> id_list, vector<string> report, int k) {
+    vector<int> answer(id_list.size(), 0);
+    unordered_multimap<string, string> m;
+    unordered_set<string> s;
+
+    for (int i = 0; i < report.size(); i++) // 공백 기준으로 앞(신고한 사용자) key, 뒤(신고당한 사용자) value로 map에 insert
+    {
+        int space = report[i].find(" ");
+
+        m.insert(make_pair(report[i].substr(space + 1, *(report[i].end() - 1)), report[i].substr(0, space))); // 공백 기준으로 앞 뒤 나누어 map에 insert
+    }
+
+    for (int i = 0; i < id_list.size(); i++)
+    {
+        if (m.count(id_list[i]) >= k) // 신고당한 사용자의 key가 k 이상이면
+        {
+            auto range = m.equal_range(id_list[i]);
+
+            for (auto iter = range.first; iter != range.second; ++iter)
+                s.insert(iter->second); // 신고한 사람들 set에 insert
+
+            if (s.size() >= k) / 중복제거 후 아직도 k보다 크면
+            {
+
+                for (auto iter = s.begin(); iter != s.end(); ++iter)
+                {
+                    for (int i = 0; i < id_list.size(); i++)
+                    {
+                        if (*iter == id_list[i]) // 문자열과 비교하여 해당 인덱스(메일 받은횟수) ++
+                            answer[i]++;
+                    }
+                }
+            }
+            
+            s.clear(); // set 원상복귀
+        }
+
+    }
+    return answer;
+}
