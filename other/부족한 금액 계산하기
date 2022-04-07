@@ -1,0 +1,19 @@
+// money의 조건 범위가 int의 범위를 넘어가므로 long long에 다시 대입
+
+using namespace std;
+
+long long solution(int price, int money, int count)
+{
+    int n = 0;
+    long long m = money;
+    for (int i = 1; i <= count; i++)
+    {
+        n += price;
+        m -= n;
+    }
+    
+    if (m > -1)
+        return 0;
+
+    return m * -1;
+}
