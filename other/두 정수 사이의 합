@@ -1,0 +1,25 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+long long solution(int a, int b) {
+    long long answer = 0;
+
+    long long n = a;
+    long long n2 = b;
+
+    if (n > n2)
+    {
+        long long tmp = n;
+        n = n2;
+        n2 = tmp;
+    }
+
+    for (long long i = n; i <= n2; i++)
+    {
+        answer += i;
+    }
+
+    return answer;
+}
