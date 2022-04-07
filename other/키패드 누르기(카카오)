@@ -1,0 +1,122 @@
+/*
+키패드 */0/#을 각각 10,11,12로 본다 -> */#은 다시 누르는 경우가 없으므로 따로 예외처리하지 않는다
+
+상,하는 +3or-3 좌우는 +1or-1의 관계이다
+
+1. 키패드가 1,4,7일 경우 왼손 좌표를 옮기고 answer에 L을 추가
+2. 키패드가 3,6,9일 경우 오른손 좌표를 옮기고 answer에 R을 추가
+3. 키패드가 2,5,8,0일 경우
+왼손이 2,5,8,11에 있다면 number을 -1하여 1,4,7중 하나가 되게 한 후 cnt++ (target 숫자를 한번 옮겼으므로)
+아닐경우 단순비교
+오른손이 2,5,8,11에 있다면 number을 +1하여 3,6,9중 하나가 되게 한 후 cnt++ (target 숫자를 한번 옮겼으므로)
+아닐경우 단순비교
+
+두 손중 cnt가 더 적은 손을 answer에 추가한다
+cnt가 같을 경우 **잡이 인 손을 추가한다
+문자열의 back()값을찾아 해당 손의 좌표를 numbers[i]에 위치시킨다
+*/
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int LeftHand(int pos, int number)
+{
+    int cnt;
+    
+    if (pos % 3 == 2)
+       cnt = 0;
+    else
+    {
+       cnt = 1;
+       number -= 1;
+    }
+
+    while (pos != number)
+    {
+        if (pos < number)
+        {
+            pos += 3;
+            cnt++;
+        }
+        else
+        {
+            pos -= 3;
+            cnt++;
+        }
+
+    }
+
+    return cnt;
+}
+
+int RightHand(int pos, int number)
+{
+    int cnt;
+
+    if (pos % 3 == 2)
+        cnt = 0;
+    else
+    {
+        cnt = 1;
+        number += 1;
+    }
+
+    while (pos != number)
+    {
+        if (pos < number)
+        {
+            pos += 3;
+            cnt++;
+        }
+        else
+        {
+            pos -= 3;
+            cnt++;
+        }
+
+    }
+
+    return cnt;
+}
+
+string solution(vector<int> numbers, string hand) {
+    string answer = "";
+    int lpos = 10;
+    int rpos = 12;
+    int lcnt;
+    int rcnt;
+    char h = (hand == "left") ? 'L' : 'R';
+
+    for (int i = 0; i < numbers.size(); i++)
+    {
+        if (numbers[i] == 1 || numbers[i] == 4 || numbers[i] == 7)
+        {
+            answer += 'L';
+            lpos = numbers[i];
+            continue;
+        }
+        else if (numbers[i] == 3 || numbers[i] == 6 || numbers[i] == 9)
+        {
+            answer += 'R';
+            rpos = numbers[i];
+            continue;
+        }
+ 
+        if (numbers[i] == 0)
+            numbers[i] = 11;
+        
+        lcnt = LeftHand(lpos, numbers[i]);
+        rcnt = RightHand(rpos, numbers[i]);
+ 
+        if (lcnt == rcnt)
+            answer += h;
+        else
+            answer += (lcnt < rcnt) ? 'L' : 'R';
+
+        (answer.back() == 'L') ? lpos = numbers[i] : rpos = numbers[i];
+    }
+    
+    return answer;
+}
