@@ -14,5 +14,5 @@ bool solution(string s)
             cnt--;
     }
 
-    return !cnt; // 반환값 바뀌어야하므로 !
+    return !cnt; // cnt = 0 -> p와 y의 개수가 같음 -> flase / true여야 하므로 !
 }
