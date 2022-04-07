@@ -1,0 +1,24 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(string s) {
+    int answer = 0;
+    int n = 0;
+
+    if (s[0] == '-' || s[0] == '+') // 맨 앞이 부호면 i = 1 부터 시작해야 함
+        n = 1;
+
+    for (int i = n; i < s.length(); i++)
+    {
+        answer *= 10;
+        answer += s[i] - '0';
+    }
+
+    if (s[0] == '-')
+        return answer*-1;
+
+    return answer;
+
+}
