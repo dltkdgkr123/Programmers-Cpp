@@ -12,11 +12,9 @@
   -> 이 코드에서는 insert가 아닌 대입이므로 갱신되는듯 하다.
 */
 
-
-
 #include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <sstream>
 #include <iostream>
 
@@ -25,7 +23,7 @@ using namespace std;
 
 vector<string> solution(vector<string> record) {
     vector<string> answer;
-    map<string, string> m;
+    unordered_map<string, string> m;
     string act;
     string uid;
     string id;
@@ -41,7 +39,7 @@ vector<string> solution(vector<string> record) {
             m[uid] = id;
         }
     }
-    
+
     for (int i = 0;i < record.size();i++)
     {
         stringstream ss(record[i]);
@@ -50,7 +48,7 @@ vector<string> solution(vector<string> record) {
 
         if (act == "Enter")
             answer.push_back(m[uid] + "님이 들어왔습니다.");
-        
+
         else if (act == "Leave")
             answer.push_back(m[uid] + "님이 나갔습니다.");
     }
