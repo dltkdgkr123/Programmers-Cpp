@@ -1,0 +1,56 @@
+/*
+    동적 계획법 : 1. 재귀호출을 사용시 부분 해를 찾기 위해 중복된 값을 다수 호출하여 인해 실행시간이 많이 걸리고, ex) DFS
+                  2. 최종 해의 하위 해가 부분 최적의 해임이 보장 될 때 사용 ex) 상위 해가 하위 해의 점화식으로 표현될 때 등
+    -> 쓸데없는 중복 호출을 막기 위하여 최적임이 보장되는 부분 해를 저장하여 사용 
+    
+      동적 계획법이라는 단어는 본 의미와 다소 맞지않으나 예전부터 쓰던 용어가 굳어져서 그대로 사용
+      
+      정수 삼각형의 맨 끝 부분은 이전 층 모든 방향의 최대값 + 끝부분의 값으로 표현됨
+      -> 이전 층 또한 전전층의 최대값 + 이전층의 합으로 표현됨
+      이를 이용하여 하위층까지 계산
+      
+      (역순으로) 삼각형을 왼쪽에 치우친 직각삼각형으로 보고, 해당층의 인덱스 j와 이전층의 인덱스 j-1, j중 더 큰값을 더함
+      
+      예외처리 : j = 0 일 때 -> 이전 인덱스 j = 0 일 때만 더하기 가능
+                 j = size - 1 (오른쪽 끝)일 때 -> 이전인덱스 j = size -2 (오른쪽 끝)일 때만 더하기 가능
+                 
+                 맨 마지막 배열을 출구로보고, 그 중 가장 큰 값을 return
+*/
+
+
+#include <string>
+#include <vector>
+#include <iostream>
+
+using namespace std;
+
+int solution(vector<vector<int>> triangle) {
+    int answer = 0;
+
+    int n[500][500] = {};
+
+    n[0][0] = triangle[0][0];
+
+    for (int i = 1; i < triangle.size(); i++)
+    {
+        int size = triangle[i].size();
+
+        for (int j = 0; j < size; j++)
+        {
+            if (j == 0)
+                n[i][j] = n[i - 1][0] + triangle[i][0];
+            else if (j == size - 1)
+                n[i][j] = n[i - 1][size - 2] + triangle[i][size - 1];
+            else
+                n[i][j] = (n[i - 1][j - 1] + triangle[i][j] > n[i - 1][j] + triangle[i][j]) ? n[i][j] = n[i - 1][j - 1] + triangle[i][j] : n[i][j] = n[i - 1][j] + triangle[i][j];
+        }
+    }
+
+    for (int i = 0; i< triangle.size(); i++)
+    { 
+        if (n[triangle.size()-1][i] > answer)
+            answer = n[triangle.size()-1][i];
+    }
+
+    return answer;
+}
