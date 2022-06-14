@@ -1,0 +1,60 @@
+/*
+  그래프 / queue를 이용한 BFS로 구현 -> begin vertax에서 출발
+  queue에 정점명과 가중치를 pair로 저장 -> while 타겟을 찾을 때 까지
+  -> 가중치는 q.front().second+1;
+  타겟을 찾으면 -> 가중치를 반환 못찾았으나 큐가 비어있으면 -> 경로가 없는 것이므로 0반환
+*/
+
+#include <string>
+#include <vector>
+#include <queue>
+#include <iostream>
+using namespace std;
+
+
+int solution(string begin, string target, vector<string> words) {
+
+    queue<pair<string, int>> q;
+    bool* visited = new bool[words.size()];
+    
+    for (int i = 0;i < words.size();i++)
+        visited[i] = false;
+
+    q.push(make_pair(begin, 0));
+
+   
+
+    while (q.front().first != target)
+    {
+        int n = 1;
+        string now = q.front().first;
+        int num = q.front().second;
+        q.pop();
+
+        for (int i = 0;i < words.size();i++)
+        {
+
+            if (!visited[i]) //방문하지 않았으면
+            {
+                int cnt = 0;
+
+                for (int j = 0;j < now.length();j++)
+                {
+                    if (now[j] == words[i][j])
+                        cnt++;
+                }
+
+                if (cnt == now.length() - 1)
+                {
+                    visited[i] = true;
+                    q.push(make_pair(words[i], num+1));
+                }
+            }
+        }
+        if (q.empty())
+            return 0;
+    }
+
+
+    return q.front().second;
+}
