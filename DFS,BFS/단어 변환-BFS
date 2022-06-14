@@ -15,7 +15,7 @@ using namespace std;
 int solution(string begin, string target, vector<string> words) {
 
     queue<pair<string, int>> q;
-    bool* visited = new bool[words.size()];
+    bool* visited = new bool[words.size()]; // words.size()만큼의 배열 생성을 위해 동적할당
     
     for (int i = 0;i < words.size();i++)
         visited[i] = false;
@@ -26,7 +26,6 @@ int solution(string begin, string target, vector<string> words) {
 
     while (q.front().first != target)
     {
-        int n = 1;
         string now = q.front().first;
         int num = q.front().second;
         q.pop();
@@ -40,14 +39,14 @@ int solution(string begin, string target, vector<string> words) {
 
                 for (int j = 0;j < now.length();j++)
                 {
-                    if (now[j] == words[i][j])
+                    if (now[j] == words[i][j]) // 글자가 같을 때 마다 cnt++;
                         cnt++;
                 }
 
-                if (cnt == now.length() - 1)
+                if (cnt == now.length() - 1) // 한 글자만 다르면
                 {
                     visited[i] = true;
-                    q.push(make_pair(words[i], num+1));
+                    q.push(make_pair(words[i], num+1)); // 가중치+1 -> 후에 정답의 가중치를 리턴(최단경로)
                 }
             }
         }
